@@ -7,6 +7,7 @@ const router = express.Router();
 router.use(protect);
 
 router.post('/positions', taskController.bulkUpdatePositions);
+router.post('/group-names', taskController.bulkUpdateGroupNames);
 
 router
   .route('/')
@@ -20,6 +21,7 @@ router
   .delete(taskController.deleteTask);
 
 router.patch('/:id/subtasks/:subtaskId', taskController.toggleSubtask);
+router.patch('/:id/subtasks/:subtaskId/board', taskController.updateSubtask);
 router.patch('/:id/position', taskController.updatePosition);
 
 router
