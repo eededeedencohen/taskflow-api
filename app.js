@@ -23,13 +23,12 @@ app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/tasks/:taskId/notes', noteRoutes);
 
-// Serve React build in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/dist')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-  });
-}
+// Serve React build
+app.use(express.static(path.join(__dirname, 'dist')));
+app.get('*', (req, res, next) => {
+  if (req.originalUrl.startsWith('/api')) return next();
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 // 404 handler
 app.all('*', (req, res, next) => {
