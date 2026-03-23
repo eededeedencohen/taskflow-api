@@ -4,6 +4,10 @@ const subtaskSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, default: '' },
   isCompleted: { type: Boolean, default: false },
+  priority: { type: String, enum: ['low', 'medium', 'high'], default: null },
+  estimatedHours: { type: Number, default: 0 },
+  boardStatus: { type: String, enum: ['todo', 'inprogress', 'done'], default: null },
+  notes: [{ text: { type: String, required: true }, createdAt: { type: Date, default: Date.now } }],
 });
 
 const taskSchema = new mongoose.Schema(
@@ -40,6 +44,7 @@ const taskSchema = new mongoose.Schema(
       x: { type: Number, default: 0 },
       y: { type: Number, default: 0 },
     },
+    groupName: { type: String, default: '' },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
